@@ -21,3 +21,7 @@ input ~ label {
 	-webkit-transition: none 86ms ease-out;
 	transition: none 86ms ease-out;
 }
+.tip {
+	position: absolute;
+	margin-top: 0.5em;
+}

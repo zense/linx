@@ -23,7 +23,11 @@ block content
               a.title(href=post.url,target='_blank')=post.title
               if post.root
                 span.subtitle=' ('+post.root+')'
+                br
+                span.tip.
+                  Click <i class="fa fa-arrow-up fa-6" aria-hidden="true"></i> to read the story
               br
+
             nav.level
               .level-left
                 .level-item
@@ -48,7 +52,7 @@ block content
                   = m.msg
               form(action='/story/'+post.id+'/comment' method='POST')
                 p.control
-                  label.label(for="text") Participate
+                  label.label(for="text") Comments
                   input(name="text" type="hidden")
                   #editor-container
                   br
