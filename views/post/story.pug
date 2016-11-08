@@ -7,11 +7,12 @@ block title
   title= post.title
 
 block user
-  span.nav-item
-    a.button.is-warning(href='/story/'+post.id+'/edit')
-      span.icon
-        i.fa.fa-pencil
-      | Edit this Story
+  if(req.user && req.user.id == post.User.id)
+    span.nav-item
+      a.button.is-warning(href='/story/'+post.id+'/edit')
+        span.icon
+          i.fa.fa-pencil
+        | Edit this Story
 
 block content
   .columns
