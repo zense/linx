@@ -43,11 +43,11 @@ module.exports = function(passport){
 		console.log(req.session.returnTo);
 	  res.redirect(req.session.returnTo || '/');
 	});
-	// router.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email', 'user_location'] }));
-	// router.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }), (req, res) => {
-	// 	console.log("JSON.serialize");
-	// 	res.redirect(req.headers.referer || '/');
-	// });
+	router.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email', 'user_location'] }));
+	router.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }), (req, res) => {
+		console.log(req.session.returnTo);
+	  res.redirect(req.session.returnTo || '/');
+	});
 	// router.get('/auth/github', passport.authenticate('github'));
 	// router.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: '/login' }), (req, res) => {
 	//   res.redirect(req.session.returnTo || '/');
