@@ -11,6 +11,7 @@
   },
   "scripts": {
     "start": "node app.js",
+    "dev" : "node -r dotenv/config app.js",
     "serve": "nodemon app.js"
   },
   "dependencies": {
