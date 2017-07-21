@@ -23,10 +23,7 @@ module.exports = function(sequelize) {
       type: Sequelize.STRING,
       allowNull: true
     },
-    category: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
+
   }, {
     freezeTableName: true,
     getterMethods: {
@@ -41,11 +38,7 @@ module.exports = function(sequelize) {
           onDelete: 'CASCADE',
           foreignKey: 'postedOn'
         });
-        Post.hasMany(models.Trending, {
-          onDelete: 'CASCADE',
-          foreignKey: 'category',
-          as:'science'
-        });
+      
       },
     },
   });

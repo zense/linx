@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": "root",
-    "database": "linx3",
+    "database": "linx4",
     "host": "127.0.0.1",
     "dialect": "mysql",
     "port": "8889"
@@ -10,7 +10,7 @@
   "production": {
     "username": "root",
     "password": "",
-    "database": "linx",
+    "database": "linx4",
     "host": "127.0.0.1",
     "dialect": "mysql"
   }

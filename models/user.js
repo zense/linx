@@ -13,10 +13,6 @@ module.exports = function(sequelize) {
       type: Sequelize.STRING,
       allowNull: true
     },
-    googleId: {
-      type: Sequelize.STRING,
-      allowNull: true
-    },
     githubId: {
       type: Sequelize.STRING,
       allowNull: true
@@ -57,11 +53,7 @@ module.exports = function(sequelize) {
           onDelete: 'CASCADE',
           foreignKey: 'postedBy'
         });
-        User.hasMany(models.Trending, {
-          as: 'Trending',
-          onDelete: 'CASCADE',
-          foreignKey: 'postedBy'
-        });
+        
       },
     }, instanceMethods: {
       comparePassword: function(password) {
