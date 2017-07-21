@@ -2,6 +2,7 @@ const passport = require('passport');
 const config = require('./config.json')[process.env.ENV];
 const LocalStrategy = require('passport-local').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const GithubStrategy = require('passport-github').Strategy;
 const AzureOAuthStrategy = require('passport-azure-oauth').Strategy;
 
@@ -109,6 +110,60 @@ passport.use(new FacebookStrategy({
     }, done);
   }
 }));
+
+/* Sign in with google.
+ */
+passport.use(new GoogleStrategy({
+  clientID: process.env.GOOGLE_ID,
+  clientSecret: process.env.GOOGLE_SECRET,
+  callbackURL: '/auth/google/callback',
+  profileFields: ['name', 'email', 'link', 'locale', 'timezone'],
+  passReqToCallback: true
+  }, (req, accessToken, refreshToken, profile, done) => {
+  if (req.user) {
+    User.findOne({ where: { googleId: profile.id }})
+		.then(existingUser => {
+      if (existingUser) {
+        req.flash('errors', { msg: 'There is already a Google account that belongs to you. Sign in with that account or delete it, then link it with your current account.' });
+        return done(null, false);
+      } else {
+        User.findById(req.user.id).then(user => {
+          user.googleId     = profile.id; // set the users facebook id
+          user.save().then(user => {
+            req.flash('info', { msg: 'Google account has been linked.' });
+            return done(null, user);
+          }, done);
+        }, done);
+      }
+    }, done);
+  } else {
+    User.findOne({ where: { googleId: profile.id }})
+		.then(existingUser => {
+      if (existingUser) {
+        return done(null, existingUser);
+      }
+      User.findOne({ where: { email: profile._json.email }})
+			.then(existingEmailUser => {
+        if (existingEmailUser) {
+          req.flash('errors', { msg: 'There is already an account using this email address. Sign in to that account and link it with Google manually from Account Settings.' });
+          done(null, false);
+        } else {
+          var user = User.build();
+          user.googleId = profile.id;
+          user.email = profile._json.email;
+          user.password = accessToken;
+          user.username = (profile.name.givenName + '_' + profile.name.familyName).toString().toLowerCase();
+          user.name  = profile.name.givenName + ' ' + profile.name.familyName; // look at the passport user profile to see how names are returned
+          user.save().then(user => {
+            done(null, user);
+          }, done);
+        }
+      }, done);
+    }, done);
+  }
+}));
+
+/**
 
 /**
  * Sign in with Office365.

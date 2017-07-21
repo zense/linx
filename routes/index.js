@@ -18,7 +18,9 @@ module.exports = function(passport){
 
 	/* GET login page. */
 	router.get('/', postController.getIndex);
-
+	router.get('/trending', postController.getTrending);
+	router.get('/cat/:name',postController.getCategory);
+	// router.get('/Science', postController.getScience);
 	router.get('/login', userController.getLogin);
 	// router.post('/login', userController.postLogin);
 	// router.get('/register', userController.getRegister);
@@ -48,6 +50,11 @@ module.exports = function(passport){
 		console.log(req.session.returnTo);
 	  res.redirect(req.session.returnTo || '/');
 	});
+	router.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }));
+	router.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), (req, res) => {
+	console.log(req.session.returnTo);
+	res.redirect(req.session.returnTo || '/');
+});
 	// router.get('/auth/github', passport.authenticate('github'));
 	// router.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: '/login' }), (req, res) => {
 	//   res.redirect(req.session.returnTo || '/');

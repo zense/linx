@@ -11,7 +11,7 @@
   },
   "scripts": {
     "start": "node app.js",
-    "dev" : "node -r dotenv/config app.js",
+    "dev": "node -r dotenv/config app.js",
     "serve": "nodemon app.js"
   },
   "dependencies": {
@@ -32,8 +32,11 @@
     "passport-facebook": "^2.1.1",
     "passport-github": "^1.1.0",
     "passport-local": "^1.0.0",
+    "pg": "^6.1.5",
+    "pg-hstore": "^2.3.2",
     "pug": "^2.0.0-beta6",
-    "sequelize": "^3.24.3",
+    "sequelize": "^3.30.4",
+    "sequelize-cli": "^2.7.0",
     "session-file-store": "^0.2.2",
     "valid-url": "^1.0.9"
   },

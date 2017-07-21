@@ -1,6 +1,6 @@
 'use strict';
 const bcrypt = require('bcrypt-nodejs');
-const url = require('url');
+const URL = require('url');
 
 // post.js - A sequelize model
 //
@@ -22,12 +22,16 @@ module.exports = function(sequelize) {
     url: {
       type: Sequelize.STRING,
       allowNull: true
-    }
+    },
+    category: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
   }, {
     freezeTableName: true,
     getterMethods: {
       root: function(){
-        return url.parse(this.url).host;
+        return URL.parse(String(this.url)).host;
       }
     },
     classMethods: {
@@ -36,6 +40,11 @@ module.exports = function(sequelize) {
         Post.hasMany(models.Comment, {
           onDelete: 'CASCADE',
           foreignKey: 'postedOn'
+        });
+        Post.hasMany(models.Trending, {
+          onDelete: 'CASCADE',
+          foreignKey: 'category',
+          as:'science'
         });
       },
     },

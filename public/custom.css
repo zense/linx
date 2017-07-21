@@ -14,6 +14,28 @@ input ~ label {
 }
 .tab-c.is-active {
   display: block;
+  margin-left: 15rem;
+  width:55rem;
+}
+.profile-content {
+  display: block;
+  margin-left: -13rem;
+  width:100%;
+}
+.profile-ul{
+  width:85%;
+}
+.box1 {
+  background-color: white;
+  border-radius: 5px;
+  font-size: 25px;
+  box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
+  display: block;
+  width:220px;
+  height:auto;
+  padding: 20px;
+  margin-left: 20px;
+  margin-top: 20px;
 }
 .tab-nav.is-active {
 	color: #00d1b2;
@@ -24,4 +46,9 @@ input ~ label {
 .tip {
 	position: absolute;
 	margin-top: 0.5em;
+}
+.abc{
+  display:inline-block;
+  position: relative;
+  float: left;
 }

@@ -13,33 +13,60 @@ html(lang='en')
     block stylesheets
 
   body
-    nav.nav.has-shadow
-      .container
-        .nav-left
-          a.nav-item.is-brand(href="/")
-            p.title linX
-          span.nav-item
-            a.button.is-primary.is-outlined(href="/submit") New Story
-        .nav-right.nav-menu
-          if(req.user)
-            block user
-            a.nav-item(href="/"+req.user.username)= req.user.name
-            a.nav-item(href="/logout") Logout
-          else
-            a.nav-item(href="/login") Login/Register
-    br
-    .container
-      block content
-    footer.footer
-      .container
-        .content.has-text-centered
-          p
-            strong='linX '
-            | is an experiment to build a vibrant community of developers and designers based out of colleges in India.
-            br
-            br
-            | &copy; 2016 &nbsp;
-            a(href='http://arko.koley.me') Gaurav Koley
+      nav.nav.has-shadow
+        .container
+          .nav-left
+            a.nav-item.is-brand(href="/")
+              p.title linX
+            span.nav-item
+              a.button.is-primary.is-outlined(href="/submit") New Story
+          .nav-right.nav-menu
+            if(req.user)
+              block user
+              a.nav-item(href="/"+req.user.username)= req.user.name
+              a.nav-item(href="/logout") Logout
+            else
+              a.nav-item(href="/login") Login/Register
+              br
+      div(class='abc')
+          .box1
+            ul
+              li
+                a.tab-nav.is-active(href="/")='Home'
+              li
+                hr
+                a.tab-nav.is-active(href="/trending")='Trending'
+              li
+                hr
+                a.tab-nav.is-active(href='/cat/science')='Science'
+              li
+                hr
+                a.tab-nav.is-active(href='/cat/movies')='Movies'
+              li
+                hr
+                a.tab-nav.is-active(href='/cat/music')='Music'
+              li
+                hr
+                a.tab-nav.is-active(href='/cat/technology')='Technology'
+              li
+                hr
+                a.tab-nav.is-active(href='/cat/others')='Others'
+
+      div(class='abc')
+          .tab-c.is-active.content
+            p
+              block content
+          footer.footer
+          .container
+            .content.has-text-centered
+              p
+                strong='linX '
+                | is an experiment to build a vibrant community of developers and designers based out of colleges in India.
+                br
+                br
+                | &copy; 2016 &nbsp;
+                a(href='http://arko.koley.me') Gaurav Koley
+
 
 script(src='/public/js/tabs.js')
 script.

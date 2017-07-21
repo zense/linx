@@ -2,28 +2,31 @@ extends ../layout
 block title
   title Home
 
+
 block content
   .columns
     .column.is-8.is-offset-2
       each post in posts
-        .box
-          article.media
-            .media-content
-              .content
-                p
-                  if post.url
-                    a(href=post.url,target='_blank')=post.title
-                    span.is-disabled=' ('+post.root+')'
-                  else
-                    a(href='/story/'+post.id,target='_blank')=post.title
-                  br
-              nav.level
-                .level-left
-                  .level-item
-                    a.tag.is-primary.is-outlined(href='/story/'+post.id)= post.Comments.length + ' Comments'
-                  .level-item
-                    u.created-at= moment(post.createdAt).fromNow()
-                    = ' by '
-                    a(href='/'+post.User.username)= post.User.name
+          .box
+            article.media
+              .media-content
+                .content
+                  p
+                    if post.url
+                      a(href=post.url,target='_blank')=post.title
+                      span.is-disabled=' ('+post.root+')'
+                    else
+                      a(href='/story/'+post.id,target='_blank')=post.title
+                    br
+                nav.level
+                  .level-left
+                    .level-item
+                      a.tag.is-primary.is-outlined(href='/story/'+post.id)= post.Comments.length + ' Comments ' + req.app.locals.currentCategory
+                    .level-item
+                        a.tag.is-primary.is-outlined(href='/story/'+post.id)= post.category
+                    .level-item
+                      u.created-at= moment(post.createdAt).fromNow()
+                      = ' by '
+                      a(href='/'+post.User.username)= post.User.name
 
   include ../includes/_paginate

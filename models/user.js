@@ -13,6 +13,10 @@ module.exports = function(sequelize) {
       type: Sequelize.STRING,
       allowNull: true
     },
+    googleId: {
+      type: Sequelize.STRING,
+      allowNull: true
+    },
     githubId: {
       type: Sequelize.STRING,
       allowNull: true
@@ -50,6 +54,11 @@ module.exports = function(sequelize) {
         });
         User.hasMany(models.Comment, {
           as: 'Comments',
+          onDelete: 'CASCADE',
+          foreignKey: 'postedBy'
+        });
+        User.hasMany(models.Trending, {
+          as: 'Trending',
           onDelete: 'CASCADE',
           foreignKey: 'postedBy'
         });

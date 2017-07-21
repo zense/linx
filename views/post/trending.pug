@@ -1,0 +1,29 @@
+extends ../layout
+block title
+  title Trending
+
+block content
+  .columns
+    .column.is-8.is-offset-2
+      each post in posts
+        if post.category == 'Technology'
+          .box
+            article.media
+              .media-content
+                .content
+                  p
+                    a(href=post.url,target='_blank')=post.title
+                    span.is-disabled=' ('+post.root+')'
+                    br
+                  nav.level
+                    .level-left
+                      .level-item
+                        a.tag.is-primary.is-outlined(href='/story/'+post.id)= post.Comments.length + ' Comments '+ currentCategory
+                      .level-item
+                        a.tag.is-primary.is-outlined(href='/'+post.category)= post.category
+                      .level-item
+                        u.created-at= moment(post.createdAt).fromNow()
+                        = ' by '
+                        a(href='/'+post.User.username)= post.User.name
+
+  include ../includes/_paginate

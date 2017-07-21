@@ -3,6 +3,8 @@ const User = require('../models').User;
 const Comment = require('../models').Comment;
 const paginate = require('express-paginate');
 
+exports.currentCategory = 'none';
+
 var setPost = req => {
   return Post.find({ where: { id: req.params.id } });
 }
@@ -29,6 +31,49 @@ exports.getIndex = (req, res, next) => {
     }).then(posts => {
         console.log(posts);
         res.render('post/index', {
+          posts: posts,
+          pageCount: pageCount,
+          pages: paginate.getArrayPages(req)(3, pageCount, req.query.page)
+        });
+    }, next);
+  }, next);
+};
+
+exports.getTrending = (req, res, next) => {
+  Post.count().then(pageCount => {
+    pageCount = Math.floor(pageCount /req.query.limit);
+    Post.findAll({
+      limit: req.query.limit,
+      offset: req.skip,
+      order: [['createdAt', 'DESC']],
+      include: [ User,
+        { model: Comment, currentCategory: currentCategory,foreignKey: 'postedOn', as: 'Comments'}
+      ]
+    }).then(posts => {
+        console.log(posts);
+        res.render('post/trending', {
+          posts: posts,
+          pageCount: pageCount,
+          pages: paginate.getArrayPages(req)(3, pageCount, req.query.page)
+        });
+    }, next);
+  }, next);
+};
+
+exports.getCategory = (req, res, next) => {
+  Post.count().then(pageCount => {
+    pageCount = Math.floor(pageCount /req.query.limit);
+    Post.findAll({
+      where: {category: req.params.name},
+      limit: req.query.limit,
+      offset: req.skip,
+      order: [['createdAt', 'DESC']],
+      include: [ User,
+        { model: Comment, foreignKey: 'postedOn', as: 'Comments'}
+      ]
+    }).then(posts => {
+        console.log(posts);
+        res.render('post/science', {
           posts: posts,
           pageCount: pageCount,
           pages: paginate.getArrayPages(req)(3, pageCount, req.query.page)
@@ -72,6 +117,7 @@ exports.postSubmit = (req, res, next) => {
     title: req.body.title,
     url: req.body.url,
     text: req.body.text,
+    category:req.body.category
   });
   post.setUser(req.user);
   post.save().then(post => {

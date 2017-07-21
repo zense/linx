@@ -12,27 +12,35 @@ block content
             p.title= user.name
             #tab-container
               .tabs
-                ul
-                  li
-                    a.tab-nav.is-active= user.Posts.length + ' Stories'
-                  li
-                    a.tab-nav= user.Comments.length + '  Comments'
+                div(class='profile-ul')
+                  ul
+                      li
+                        a.tab-nav.is-active= user.Posts.length + ' Stories'
+                      li
+                        a.tab-nav.is= user.Comments.length + '  Comments'
+                      li
+                        a.tab-nav= user.Comments.length + '  Followers'
+                      li
+                        a.tab-nav= user.Comments.length + '  Followings'
+                      li
+                        a.tab-nav= user.Comments.length + '  Liked'
               .tab-c.is-active.content
-                each post in user.Posts
-                  p
-                    if post.url
-                      a(href=post.url,target='_blank')=post.title
-                      span.is-disabled=' ('+post.root+')'
-                    else
-                      a(href='/story/'+post.id,target='_blank')=post.title
-                    br
-                  nav.level
-                    .level-left
-                      .level-item
-                        a.tag.is-primary.is-outlined(href='/story/'+post.id)=post.Comments.length + ' Comments'
-                      .level-item
-                        u.created-at= moment(post.createdAt).fromNow()
-                  hr
+                div(class='profile-content')
+                  each post in user.Posts
+                    p
+                      if post.url
+                        a(href=post.url,target='_blank')=post.title
+                        span.is-disabled=' ('+post.root+')'
+                      else
+                        a(href='/story/'+post.id,target='_blank')=post.title
+                      br
+                    nav.level
+
+                        .level-item
+                          a.tag.is-primary.is-outlined(href='/story/'+post.id)=post.Comments.length + ' Comments'
+                        .level-item
+                          u.created-at= moment(post.createdAt).fromNow()
+                    hr
               .tab-c(id='comments').content
                 each comment in user.Comments
                   ='Posted to '
@@ -40,7 +48,8 @@ block content
                   =', '
                   small= moment(comment.createdAt).fromNow()
                   .content !{comment.text}
-                  hr
+                    hr
+
 block scripts
   script
     |  var myTabs = tabs({
